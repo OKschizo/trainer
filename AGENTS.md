@@ -2,13 +2,21 @@
 
 ## Cursor Cloud specific instructions
 
-This repository ("trainer") is currently an empty project with only a `README.md`. There are no application services, dependencies, build systems, or test frameworks configured yet.
+This is a Python MCP server providing DWG file format expertise via RAG. See `README.md` for full docs.
 
-- **No services to start.** The repo has no runnable application code.
-- **No lint/test/build commands.** No tooling is configured.
-- **No dependencies to install.** No package manager lockfiles or manifest files exist.
+### Key commands
 
-When application code is added, update this section with:
-- How to install dependencies and which package manager to use.
-- How to run lint, tests, and the dev server.
-- Any non-obvious startup caveats or environment requirements.
+- **Install deps:** `pip install -e ".[dev]"` (run from venv)
+- **Lint:** `ruff check src/ scripts/ tests/`
+- **Tests:** `PYTHONPATH=src pytest tests/ -v`
+- **Extract PDF:** `python scripts/extract_pdf.py` (requires PDF in `knowledge/raw/`)
+- **Build index:** `python scripts/build_index.py` (requires extracted chapters)
+- **Run MCP server:** `PYTHONPATH=src python -m dwg_mcp.server`
+
+### Non-obvious caveats
+
+- The vector DB (`knowledge/vectordb/`) and raw PDF (`knowledge/raw/*.pdf`) are git-ignored. The extraction and indexing pipeline must be run before the MCP server or search tests will work.
+- `PYTHONPATH=src` is required when running tests or the server, since the `dwg_mcp` package lives under `src/`.
+- The `sentence-transformers` model (`all-MiniLM-L6-v2`) downloads on first use (~90MB). Subsequent runs use the cached model.
+- ChromaDB's `SentenceTransformerEmbeddingFunction` may show a `LOAD REPORT` warning about `embeddings.position_ids` being unexpected — this is harmless and can be ignored.
+- Chapter extraction matches headings after the Table of Contents to avoid capturing ToC entries.
