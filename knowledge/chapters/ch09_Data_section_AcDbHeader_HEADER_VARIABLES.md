@@ -1,0 +1,1074 @@
+# Chapter 9: Data section AcDb:Header (HEADER VARIABLES)
+
+9 Data section AcDb:Header (HEADER
+VARIABLES)
+The header contains all header (system) variables, except the MEASUREMENT variable, which is
+present in the AcDb:Template section, see chapter 22.
+The header variables section indicated by section-locator 0 has the following form:
+Beginning sentinel
+Size of the section (a 4 byte long)
+R2010/R2013 (only present if the maintenance version is greater than 3!) or R2018+:
+Unknown (4 byte long), might be part of a 64-bit size.
+Data (system variables and possibly other data at the beginning)
+CRC (covers the stepper and the data)
+Ending sentinel
+This data section appear as one long stream, with no gaps. Most are bit coded. (See the BIT CODES
+section.) The header is padded with random bits to the next byte boundary.
+The following 16 byte sentinel introduces this section:
+0xCF,0x7B,0x1F,0x23,0xFD,0xDE,0x38,0xA9,0x5F,0x7C,0x68,0xB8,0x4E,0x6D,0x33,0x5F
+RL : Size of the section.
+Next come the data items, as listed below:
+
+TYPE  DESCRIPTION
+R2007 Only:
+
+RL : Size in bits
+R2013+:
+
+BLL : Variabele REQUIREDVERSIONS, default value 0, read only.
+Common:
+
+BD : Unknown, default value 412148564080.0
+
+BD : Unknown, default value 1.0
+
+BD : Unknown, default value 1.0
+
+BD : Unknown, default value 1.0
+
+TV : Unknown text string, default ""
+
+TV : Unknown text string, default ""
+
+TV : Unknown text string, default ""
+
+TV : Unknown text string, default ""
+
+BL : Unknown long, default value 24L
+
+BL : Unknown long, default value 0L;
+R13-R14 Only:
+
+Open Design Specification for .dwg files
+
+73
+
+
+
+BS : Unknown short, default value 0
+Pre-2004 Only:
+
+H : Handle of the current viewport entity header (hard pointer)
+Common:
+
+B : DIMASO
+
+B : DIMSHO
+R13-R14 Only:
+
+B : DIMSAV  Undocumented.
+Common:
+
+B : PLINEGEN
+
+B : ORTHOMODE
+
+B : REGENMODE
+
+B : FILLMODE
+
+B : QTEXTMODE
+
+B : PSLTSCALE
+
+B : LIMCHECK
+R13-R14 Only (stored in registry from R15 onwards):
+
+B : BLIPMODE
+R2004+:
+
+B : Undocumented
+Common:
+
+B : USRTIMER (User timer on/off).
+
+B : SKPOLY
+
+B : ANGDIR
+
+B : SPLFRAME
+R13-R14 Only (stored in registry from R15 onwards):
+
+B : ATTREQ
+
+B : ATTDIA
+Common:
+
+B : MIRRTEXT
+
+B : WORLDVIEW
+R13-R14 Only:
+
+B : WIREFRAME  Undocumented.
+Common:
+
+B : TILEMODE
+
+B : PLIMCHECK
+
+B : VISRETAIN
+R13-R14 Only (stored in registry from R15 onwards):
+
+B : DELOBJ
+Common:
+
+Open Design Specification for .dwg files
+
+74
+
+
+
+B : DISPSILH
+
+B : PELLIPSE (not present in DXF)
+
+BS : PROXYGRAPHICS
+R13-R14 Only (stored in registry from R15 onwards):
+
+BS : DRAGMODE
+Common:
+
+BS : TREEDEPTH
+
+BS : LUNITS
+
+BS : LUPREC
+
+BS : AUNITS
+
+BS : AUPREC
+R13-R14 Only Only (stored in registry from R15 onwards):
+
+BS : OSMODE
+Common:
+
+BS : ATTMODE
+R13-R14 Only Only (stored in registry from R15 onwards):
+
+BS : COORDS
+Common:
+
+BS : PDMODE
+R13-R14 Only Only (stored in registry from R15 onwards):
+
+BS : PICKSTYLE
+R2004+:
+
+BL : Unknown
+
+BL: Unknown
+
+BL : Unknown
+Common:
+
+BS : USERI1
+
+BS : USERI2
+
+BS : USERI3
+
+BS : USERI4
+
+BS : USERI5
+
+BS : SPLINESEGS
+
+BS : SURFU
+
+BS : SURFV
+
+BS : SURFTYPE
+
+BS : SURFTAB1
+
+BS : SURFTAB2
+
+BS : SPLINETYPE
+
+BS : SHADEDGE
+
+BS : SHADEDIF
+
+Open Design Specification for .dwg files
+
+75
+
+
+
+BS : UNITMODE
+
+BS : MAXACTVP
+
+BS : ISOLINES
+
+BS : CMLJUST
+
+BS : TEXTQLTY
+
+BD : LTSCALE
+
+BD : TEXTSIZE
+
+BD : TRACEWID
+
+BD : SKETCHINC
+
+BD : FILLETRAD
+
+BD : THICKNESS
+
+BD : ANGBASE
+
+BD : PDSIZE
+
+BD : PLINEWID
+
+BD : USERR1
+
+BD : USERR2
+
+BD : USERR3
+
+BD : USERR4
+
+BD : USERR5
+
+BD : CHAMFERA
+
+BD : CHAMFERB
+
+BD : CHAMFERC
+
+BD : CHAMFERD
+
+BD : FACETRES
+
+BD : CMLSCALE
+
+BD : CELTSCALE
+R13-R18:
+
+TV : MENUNAME
+Common:
+
+BL : TDCREATE   (Julian day)
+
+BL : TDCREATE   (Milliseconds into the day)
+
+BL : TDUPDATE   (Julian day)
+
+BL : TDUPDATE   (Milliseconds into the day)
+R2004+:
+
+BL : Unknown
+
+BL : Unknown
+
+BL : Unknown
+Common:
+
+BL : TDINDWG    (Days)
+
+BL : TDINDWG    (Milliseconds into the day)
+
+Open Design Specification for .dwg files
+
+76
+
+
+
+BL : TDUSRTIMER (Days)
+
+BL : TDUSRTIMER (Milliseconds into the day)
+
+CMC : CECOLOR
+
+H : HANDSEED  The next handle, with an 8-bit length specifier preceding the handle
+bytes (standard hex handle form) (code 0). The HANDSEED is not part of the handle
+stream, but of the normal data stream (relevant for R21 and later).
+
+H : CLAYER (hard pointer)
+
+H : TEXTSTYLE (hard pointer)
+
+H : CELTYPE (hard pointer)
+R2007+ Only:
+
+H : CMATERIAL (hard pointer)
+Common:
+
+H : DIMSTYLE (hard pointer)
+
+H : CMLSTYLE (hard pointer)
+R2000+ Only:
+
+BD : PSVPSCALE
+Common:
+
+3BD : INSBASE                           (PSPACE)
+
+3BD : EXTMIN                            (PSPACE)
+
+3BD : EXTMAX                            (PSPACE)
+
+2RD : LIMMIN                            (PSPACE)
+
+2RD : LIMMAX                            (PSPACE)
+
+BD : ELEVATION                         (PSPACE)
+
+3BD : UCSORG                            (PSPACE)
+
+3BD : UCSXDIR                           (PSPACE)
+
+3BD : UCSYDIR                           (PSPACE)
+
+H : UCSNAME                           (PSPACE) (hard pointer)
+R2000+ Only:
+
+H : PUCSORTHOREF (hard pointer)
+
+BS : PUCSORTHOVIEW
+
+H : PUCSBASE (hard pointer)
+
+3BD : PUCSORGTOP
+
+3BD : PUCSORGBOTTOM
+
+3BD : PUCSORGLEFT
+
+3BD : PUCSORGRIGHT
+
+3BD : PUCSORGFRONT
+
+3BD : PUCSORGBACK
+Common:
+
+3BD : INSBASE                           (MSPACE)
+
+3BD : EXTMIN                            (MSPACE)
+
+3BD : EXTMAX                            (MSPACE)
+
+Open Design Specification for .dwg files
+
+77
+
+
+
+2RD : LIMMIN                            (MSPACE)
+
+2RD : LIMMAX                            (MSPACE)
+
+BD : ELEVATION                         (MSPACE)
+
+3BD : UCSORG                            (MSPACE)
+
+3BD : UCSXDIR                           (MSPACE)
+
+3BD : UCSYDIR                           (MSPACE)
+
+H : UCSNAME                           (MSPACE) (hard pointer)
+R2000+ Only:
+
+H :  UCSORTHOREF (hard pointer)
+
+BS : UCSORTHOVIEW
+
+H : UCSBASE (hard pointer)
+
+3BD : UCSORGTOP
+
+3BD : UCSORGBOTTOM
+
+3BD : UCSORGLEFT
+
+3BD : UCSORGRIGHT
+
+3BD : UCSORGFRONT
+
+3BD : UCSORGBACK
+
+TV : DIMPOST
+
+TV : DIMAPOST
+R13-R14 Only:
+
+B : DIMTOL
+
+B : DIMLIM
+
+B : DIMTIH
+
+B : DIMTOH
+
+B : DIMSE1
+
+B : DIMSE2
+
+B : DIMALT
+
+B : DIMTOFL
+
+B : DIMSAH
+
+B : DIMTIX
+
+B : DIMSOXD
+
+RC : DIMALTD
+
+RC : DIMZIN
+
+B : DIMSD1
+
+B : DIMSD2
+
+RC : DIMTOLJ
+
+RC : DIMJUST
+
+RC : DIMFIT
+
+B : DIMUPT
+
+RC : DIMTZIN
+
+Open Design Specification for .dwg files
+
+78
+
+
+
+RC : DIMALTZ
+
+RC : DIMALTTZ
+
+RC : DIMTAD
+
+BS : DIMUNIT
+
+BS : DIMAUNIT
+
+BS : DIMDEC
+
+BS : DIMTDEC
+
+BS : DIMALTU
+
+BS : DIMALTTD
+
+H : DIMTXSTY (hard pointer)
+Common:
+
+BD : DIMSCALE
+
+BD : DIMASZ
+
+BD : DIMEXO
+
+BD : DIMDLI
+
+BD : DIMEXE
+
+BD : DIMRND
+
+BD : DIMDLE
+
+BD : DIMTP
+
+BD : DIMTM
+R2007+ Only:
+
+BD : DIMFXL
+
+BD : DIMJOGANG
+
+BS : DIMTFILL
+
+CMC : DIMTFILLCLR
+R2000+ Only:
+
+B : DIMTOL
+
+B : DIMLIM
+
+B : DIMTIH
+
+B : DIMTOH
+
+B : DIMSE1
+
+B : DIMSE2
+
+BS : DIMTAD
+
+BS : DIMZIN
+
+BS : DIMAZIN
+R2007+ Only:
+
+BS : DIMARCSYM
+Common:
+
+BD : DIMTXT
+
+BD : DIMCEN
+
+Open Design Specification for .dwg files
+
+79
+
+
+
+BD : DIMTSZ
+
+BD : DIMALTF
+
+BD : DIMLFAC
+
+BD : DIMTVP
+
+BD : DIMTFAC
+
+BD : DIMGAP
+R13-R14 Only:
+
+T : DIMPOST
+
+T : DIMAPOST
+
+T : DIMBLK
+
+T : DIMBLK1
+
+T : DIMBLK2
+R2000+ Only:
+
+BD : DIMALTRND
+
+B : DIMALT
+
+BS : DIMALTD
+
+B : DIMTOFL
+
+B : DIMSAH
+
+B : DIMTIX
+
+B : DIMSOXD
+Common:
+
+CMC : DIMCLRD
+
+CMC : DIMCLRE
+
+CMC : DIMCLRT
+R2000+ Only:
+
+BS : DIMADEC
+
+BS : DIMDEC
+
+BS : DIMTDEC
+
+BS : DIMALTU
+
+BS : DIMALTTD
+
+BS : DIMAUNIT
+
+BS : DIMFRAC
+
+BS : DIMLUNIT
+
+BS : DIMDSEP
+
+BS : DIMTMOVE
+
+BS : DIMJUST
+
+B : DIMSD1
+
+B : DIMSD2
+
+BS : DIMTOLJ
+
+BS : DIMTZIN
+
+Open Design Specification for .dwg files
+
+80
+
+
+
+BS : DIMALTZ
+
+BS : DIMALTTZ
+
+B : DIMUPT
+
+BS : DIMATFIT
+R2007+ Only:
+
+B : DIMFXLON
+R2010+ Only:
+
+B : DIMTXTDIRECTION
+
+BD : DIMALTMZF
+
+T : DIMALTMZS
+
+BD : DIMMZF
+
+T : DIMMZS
+R2000+ Only:
+
+H : DIMTXSTY (hard pointer)
+
+H : DIMLDRBLK (hard pointer)
+
+H : DIMBLK (hard pointer)
+
+H : DIMBLK1 (hard pointer)
+
+H : DIMBLK2 (hard pointer)
+R2007+ Only:
+
+H : DIMLTYPE (hard pointer)
+
+H : DIMLTEX1 (hard pointer)
+
+H : DIMLTEX2 (hard pointer)
+R2000+ Only:
+
+BS : DIMLWD
+
+BS : DIMLWE
+Common:
+
+H : BLOCK CONTROL OBJECT (hard owner)
+
+H : LAYER CONTROL OBJECT (hard owner)
+
+H : STYLE CONTROL OBJECT (hard owner)
+
+H : LINETYPE CONTROL OBJECT (hard owner)
+
+H : VIEW CONTROL OBJECT (hard owner)
+
+H : UCS CONTROL OBJECT (hard owner)
+
+H : VPORT CONTROL OBJECT (hard owner)
+
+H : APPID CONTROL OBJECT (hard owner)
+
+H : DIMSTYLE CONTROL OBJECT (hard owner)
+R13-R15 Only:
+
+H : VIEWPORT ENTITY HEADER CONTROL OBJECT (hard owner)
+Common:
+
+H : DICTIONARY (ACAD_GROUP) (hard pointer)
+
+H : DICTIONARY (ACAD_MLINESTYLE) (hard pointer)
+
+Open Design Specification for .dwg files
+
+81
+
+
+
+H : DICTIONARY (NAMED OBJECTS) (hard owner)
+R2000+ Only:
+
+BS : TSTACKALIGN, default = 1 (not present in DXF)
+
+BS : TSTACKSIZE, default = 70 (not present in DXF)
+
+TV : HYPERLINKBASE
+
+TV : STYLESHEET
+
+H : DICTIONARY (LAYOUTS) (hard pointer)
+
+H : DICTIONARY (PLOTSETTINGS) (hard pointer)
+
+H : DICTIONARY (PLOTSTYLES) (hard pointer)
+R2004+:
+
+H : DICTIONARY (MATERIALS) (hard pointer)
+
+H : DICTIONARY (COLORS) (hard pointer)
+R2007+:
+
+H : DICTIONARY (VISUALSTYLE) (hard pointer)
+R2013+:
+
+H : UNKNOWN (hard pointer)
+R2000+:
+
+BL : Flags:
+
+
+CELWEIGHT
+Flags & 0x001F
+
+
+ENDCAPS
+Flags & 0x0060
+
+
+JOINSTYLE
+Flags & 0x0180
+
+
+LWDISPLAY
+!(Flags & 0x0200)
+
+
+XEDIT
+
+!(Flags & 0x0400)
+
+
+EXTNAMES
+Flags & 0x0800
+
+
+PSTYLEMODE
+Flags & 0x2000
+
+
+OLESTARTUP
+Flags & 0x4000
+
+BS : INSUNITS
+
+BS : CEPSNTYPE
+
+H : CPSNID (present only if CEPSNTYPE == 3) (hard pointer)
+
+TV : FINGERPRINTGUID
+
+TV : VERSIONGUID
+R2004+:
+
+RC : SORTENTS
+
+RC : INDEXCTL
+
+RC : HIDETEXT
+
+RC : XCLIPFRAME, before R2010 the value can be 0 or 1 only.
+
+RC : DIMASSOC
+
+RC : HALOGAP
+
+BS : OBSCUREDCOLOR
+
+BS : INTERSECTIONCOLOR
+
+RC : OBSCUREDLTYPE
+
+Open Design Specification for .dwg files
+
+82
+
+
+
+RC : INTERSECTIONDISPLAY
+
+TV : PROJECTNAME
+Common:
+
+H : BLOCK_RECORD (*PAPER_SPACE) (hard pointer)
+
+H : BLOCK_RECORD (*MODEL_SPACE) (hard pointer)
+
+H : LTYPE (BYLAYER) (hard pointer)
+
+H : LTYPE (BYBLOCK) (hard pointer)
+
+H : LTYPE (CONTINUOUS) (hard pointer)
+R2007+:
+
+B : CAMERADISPLAY
+
+BL : unknown
+
+BL : unknown
+
+BD : unknown
+
+BD : STEPSPERSEC
+
+BD : STEPSIZE
+
+BD : 3DDWFPREC
+
+BD : LENSLENGTH
+
+BD : CAMERAHEIGHT
+
+RC : SOLIDHIST
+
+RC : SHOWHIST
+
+BD : PSOLWIDTH
+
+BD : PSOLHEIGHT
+
+BD : LOFTANG1
+
+BD : LOFTANG2
+
+BD : LOFTMAG1
+
+BD : LOFTMAG2
+
+BS : LOFTPARAM
+
+RC : LOFTNORMALS
+
+BD : LATITUDE
+
+BD : LONGITUDE
+
+BD : NORTHDIRECTION
+
+BL : TIMEZONE
+
+RC : LIGHTGLYPHDISPLAY
+
+RC : TILEMODELIGHTSYNCH
+
+RC : DWFFRAME
+
+RC : DGNFRAME
+
+B : unknown
+
+CMC : INTERFERECOLOR
+
+H : INTERFEREOBJVS (hard pointer)
+
+
+H : INTERFEREVPVS (hard pointer)
+
+
+
+Open Design Specification for .dwg files
+
+83
+
+
+
+H : DRAGVS (hard pointer)
+
+
+
+RC : CSHADOW
+
+BD : unknown
+R14+:
+
+BS : unknown short (type 5/6 only)  these do not seem to be required,
+
+BS : unknown short (type 5/6 only)  even for type 5.
+
+BS : unknown short (type 5/6 only)
+
+BS : unknown short (type 5/6 only)
+Common:
+
+RS : CRC for the data section, starting after the sentinel. Use 0xC0C1 for the initial
+value.
+This following 16-byte sentinel appears after the CRC:
+0x30,0x84,0xE0,0xDC,0x02,0x21,0xC7,0x56,0xA0,0x83,0x97,0x47,0xB1,0x92,0xCC,0xA0
+Here is a dump of a complete R14 header:
+empty14.dwg  02/24/98  11:40:03
+0  1  2  3  4  5  6  7
+00000 41 43 31 30 31 34 00 00   AC1014..   0100 0001 0100 0011 0011 0001 0011 0000 0011 0001 0011 0100 0000 0000 0000 0000
+
+00008 00 00 00 00 01 3F 0C 00   .....?..   0000 0000 0000 0000 0000 0000 0000 0000 0000 0001 0011 1111 0000 1100 0000 0000
+
+00010 00 00 00 1E 00 05 00 00   ........   0000 0000 0000 0000 0000 0000 0001 1110 0000 0000 0000 0101 0000 0000 0000 0000
+
+00018 00 00 58 00 00 00 ED 01   ..X.....   0000 0000 0000 0000 0101 1000 0000 0000 0000 0000 0000 0000 1110 1101 0000 0001
+
+00020 00 00 01 45 02 00 00 26   ...E...&   0000 0000 0000 0000 0000 0001 0100 0101 0000 0010 0000 0000 0000 0000 0010 0110
+
+00028 00 00 00 02 27 0B 00 00   ....'...   0000 0000 0000 0000 0000 0000 0000 0010 0010 0111 0000 1011 0000 0000 0000 0000
+
+00030 50 00 00 00 03 77 0B 00   P....w..   0101 0000 0000 0000 0000 0000 0000 0000 0000 0011 0111 0111 0000 1011 0000 0000
+
+00038 00 35 00 00 00 04 3B 0C   .5....;.   0000 0000 0011 0101 0000 0000 0000 0000 0000 0000 0000 0100 0011 1011 0000 1100
+0  1  2  3  4  5  6  7
+00040 00 00 04 00 00 00 2D 5C   ......-\   0000 0000 0000 0000 0000 0100 0000 0000 0000 0000 0000 0000 0010 1101 0101 1100
+
+00048 95 A0 4E 28 99 82 1A E5   ..N(....   1001 0101 1010 0000 0100 1110 0010 1000 1001 1001 1000 0010 0001 1010 1110 0101
+
+00050 5E 41 E0 5F 9D 3A 4D 00   ^A._.:M.   0101 1110 0100 0001 1110 0000 0101 1111 1001 1101 0011 1010 0100 1101 0000 0000
+
+00058 CF 7B 1F 23 FD DE 38 A9   .{.#..8.   1100 1111 0111 1011 0001 1111 0010 0011 1111 1101 1101 1110 0011 1000 1010 1001
+
+00060 5F 7C 68 B8 4E 6D 33 5F   _|h.Nm3_   0101 1111 0111 1100 0110 1000 1011 1000 0100 1110 0110 1101 0011 0011 0101 1111
+
+00068 C7 01 00 00 00 00 07 00   ........   1100 0111 0000 0001 0000 0000 0000 0000 0000 0000 0000 0000 0000 0111 0000 0000
+
+00070 1F BF 55 D0 95 40 5B 6A   ..U..@[j   0001 1111 1011 1111 0101 0101 1101 0000 1001 0101 0100 0000 0101 1011 0110 1010
+
+00078 51 A9 43 1A 65 AC 40 50   Q.C.e.@P   0101 0001 1010 1001 0100 0011 0001 1010 0110 0101 1010 1100 0100 0000 0101 0000
+
+0  1  2  3  4  5  6  7
+00080 23 30 2D 02 41 2A 40 50   #0-.A*@P   0010 0011 0011 0000 0010 1101 0000 0010 0100 0001 0010 1010 0100 0000 0101 0000
+
+00088 19 01 AA 90 84 19 06 41   .......A   0001 1001 0000 0001 1010 1010 1001 0000 1000 0100 0001 1001 0000 0110 0100 0001
+
+Open Design Specification for .dwg files
+
+84
+
+
+
+00090 90 64 19 06 40 D4 69 30   .d..@.i0   1001 0000 0110 0100 0001 1001 0000 0110 0100 0000 1101 0100 0110 1001 0011 0000
+
+00098 41 24 C9 26 A6 66 66 66   A$.&.fff   0100 0001 0010 0100 1100 1001 0010 0110 1010 0110 0110 0110 0110 0110 0110 0110
+
+000A0 66 72 4F C9 A9 99 99 99   frO.....   0110 0110 0111 0010 0100 1111 1100 1001 1010 1001 1001 1001 1001 1001 1001 1001
+
+000A8 99 9A 93 F2 6A 66 66 66   ....jfff   1001 1001 1001 1010 1001 0011 1111 0010 0110 1010 0110 0110 0110 0110 0110 0110
+
+000B0 66 66 E4 FC 00 00 00 00   ff......   0110 0110 0110 0110 1110 0100 1111 1100 0000 0000 0000 0000 0000 0000 0000 0000
+
+000B8 00 00 E0 3F AA AA 80 00   ...?....   0000 0000 0000 0000 1110 0000 0011 1111 1010 1010 1010 1010 1000 0000 0000 0000
+
+0  1  2  3  4  5  6  7
+000C0 00 00 00 00 0E 03 F0 00   ........   0000 0000 0000 0000 0000 0000 0000 0000 0000 1110 0000 0011 1111 0000 0000 0000
+
+000C8 00 00 00 00 03 80 FD 80   ........   0000 0000 0000 0000 0000 0000 0000 0000 0000 0011 1000 0000 1111 1101 1000 0000
+
+000D0 00 00 00 00 00 0E 03 F5   ........   0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 1110 0000 0011 1111 0101
+
+000D8 40 4B 8B 56 52 50 02 D1   @K.VRP..   0100 0000 0100 1011 1000 1011 0101 0110 0101 0010 0101 0000 0000 0010 1101 0001
+
+000E0 A6 00 08 B5 65 25 00 20   ....e%.    1010 0110 0000 0000 0000 1000 1011 0101 0110 0101 0010 0101 0000 0000 0010 0000
+
+000E8 29 E0 00 A3 30 F4 00 02   )...0...   0010 1001 1110 0000 0000 0000 1010 0011 0011 0000 1111 0100 0000 0000 0000 0010
+
+000F0 33 0F 40 00 30 14 D5 10   3.@.0...   0011 0011 0000 1111 0100 0000 0000 0000 0011 0000 0001 0100 1101 0101 0001 0000
+
+000F8 F5 11 05 11 45 11 D5 11   ....E...   1111 0101 0001 0001 0000 0101 0001 0001 0100 0101 0001 0001 1101 0101 0001 0001
+
+0  1  2  3  4  5  6  7
+00100 CA 84 08 CB 57 81 DA F1   ....W...   1100 1010 1000 0100 0000 1000 1100 1011 0101 0111 1000 0001 1101 1010 1111 0001
+
+00108 54 41 02 32 D5 E0 76 BC   TA.2..v.   0101 0100 0100 0001 0000 0010 0011 0010 1101 0101 1110 0000 0111 0110 1011 1100
+
+00110 55 10 40 8C B5 78 1D AF   U.@..x..   0101 0101 0001 0000 0100 0000 1000 1100 1011 0101 0111 1000 0001 1101 1010 1111
+
+00118 15 44 10 23 2D 5E 07 6B   .D.#-^.k   0001 0101 0100 0100 0001 0000 0010 0011 0010 1101 0101 1110 0000 0111 0110 1011
+
+00120 C5 71 04 08 CB 57 81 DA   .q...W..   1100 0101 0111 0001 0000 0100 0000 1000 1100 1011 0101 0111 1000 0001 1101 1010
+
+00128 F1 5C 41 02 32 D5 E0 76   .\A.2..v   1111 0001 0101 1100 0100 0001 0000 0010 0011 0010 1101 0101 1110 0000 0111 0110
+
+00130 BC 57 10 00 00 00 00 00   .W......   1011 1100 0101 0111 0001 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+
+00138 00 00 00 00 00 00 00 00   ........   0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+
+0  1  2  3  4  5  6  7
+00140 00 00 00 00 00 00 00 00   ........   0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+
+00148 00 A1 00 00 00 00 00 00   ........   0000 0000 1010 0001 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+
+00150 00 89 02 A9 A9 94 2A 10   ......*.   0000 0000 1000 1001 0000 0010 1010 1001 1010 1001 1001 0100 0010 1010 0001 0000
+
+00158 23 2D 5E 07 6B C5 51 04   #-^.k.Q.   0010 0011 0010 1101 0101 1110 0000 0111 0110 1011 1100 0101 0101 0001 0000 0100
+
+00160 08 CB 57 81 DA F1 54 41   ..W...TA   0000 1000 1100 1011 0101 0111 1000 0001 1101 1010 1111 0001 0101 0100 0100 0001
+
+00168 02 32 D5 E0 76 BC 55 10   .2..v.U.   0000 0010 0011 0010 1101 0101 1110 0000 0111 0110 1011 1100 0101 0101 0001 0000
+
+00170 40 8C B5 78 1D AF 15 C4   @..x....   0100 0000 1000 1100 1011 0101 0111 1000 0001 1101 1010 1111 0001 0101 1100 0100
+
+00178 10 23 2D 5E 07 6B C5 71   .#-^.k.q   0001 0000 0010 0011 0010 1101 0101 1110 0000 0111 0110 1011 1100 0101 0111 0001
+
+
+Open Design Specification for .dwg files
+
+85
+
+
+0  1  2  3  4  5  6  7
+00180 04 08 CB 57 81 DA F1 5C   ...W...\   0000 0100 0000 1000 1100 1011 0101 0111 1000 0001 1101 1010 1111 0001 0101 1100
+
+00188 40 00 00 00 00 00 00 00   @.......   0100 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+
+00190 00 00 00 00 00 00 00 00   ........   0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+
+00198 00 00 00 00 00 00 02 84   ........   0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0010 1000 0100
+
+001A0 00 00 00 00 00 00 02 24   .......$   0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0010 0010 0100
+
+001A8 0A A6 A6 50 30 00 40 00   ...P0.@.   0000 1010 1010 0110 1010 0110 0101 0000 0011 0000 0000 0000 0100 0000 0000 0000
+
+001B0 08 00 18 00 00 00 01 02   ........   0000 1000 0000 0000 0001 1000 0000 0000 0000 0000 0000 0000 0000 0001 0000 0010
+
+001B8 90 44 11 02 40 94 44 10   .D..@.D.   1001 0000 0100 0100 0001 0001 0000 0010 0100 0000 1001 0100 0100 0100 0001 0000
+
+0  1  2  3  4  5  6  7
+001C0 2B 5E 8D C0 F4 2B 1C FC   +^...+..   0010 1011 0101 1110 1000 1101 1100 0000 1111 0100 0010 1011 0001 1100 1111 1100
+
+001C8 00 00 00 00 00 00 B0 3F   .......?   0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 1011 0000 0011 1111
+
+001D0 14 AE 07 A1 7A D4 76 0F   ....z.v.   0001 0100 1010 1110 0000 0111 1010 0001 0111 1010 1101 0100 0111 0110 0000 1111
+
+001D8 C0 AD 7A 37 03 D0 AC 73   ..z7...s   1100 0000 1010 1101 0111 1010 0011 0111 0000 0011 1101 0000 1010 1100 0111 0011
+
+001E0 FA A0 2B 5E 8D C0 F4 2B   ..+^...+   1111 1010 1010 0000 0010 1011 0101 1110 1000 1101 1100 0000 1111 0100 0010 1011
+
+001E8 1C FC 0A D7 A3 70 3D 0A   .....p=.   0001 1100 1111 1100 0000 1010 1101 0111 1010 0011 0111 0000 0011 1101 0000 1010
+
+001F0 B7 3F 86 66 66 66 66 66   .?.fffff   1011 0111 0011 1111 1000 0110 0110 0110 0110 0110 0110 0110 0110 0110 0110 0110
+
+001F8 63 94 06 40 AD 7A 37 03   c..@.z7.   0110 0011 1001 0100 0000 0110 0100 0000 1010 1101 0111 1010 0011 0111 0000 0011
+
+0  1  2  3  4  5  6  7
+00200 D0 AB 73 FA AA A3 10 13   ..s.....   1101 0000 1010 1011 0111 0011 1111 1010 1010 1010 1010 0011 0001 0000 0001 0011
+
+00208 10 23 10 33 10 53 10 63   .#.3.S.c   0001 0000 0010 0011 0001 0000 0011 0011 0001 0000 0101 0011 0001 0000 0110 0011
+
+00210 10 73 10 83 10 93 10 A3   .s......   0001 0000 0111 0011 0001 0000 1000 0011 0001 0000 1001 0011 0001 0000 1010 0011
+
+00218 10 B5 10 D5 10 E3 10 C5   ........   0001 0000 1011 0101 0001 0000 1101 0101 0001 0000 1110 0011 0001 0000 1100 0101
+
+00220 11 65 11 95 11 45 11 35   .e...E.5   0001 0001 0110 0101 0001 0001 1001 0101 0001 0001 0100 0101 0001 0001 0011 0101
+
+00228 11 51 D5 58 D4 A0 34 26   .Q.X..4&   0001 0001 0101 0001 1101 0101 0101 1000 1101 0100 1010 0000 0011 0100 0010 0110
+
+00230 4B 76 E0 5B 27 30 84 E0   Kv.['0..   0100 1011 0111 0110 1110 0000 0101 1011 0010 0111 0011 0000 1000 0100 1110 0000
+
+00238 DC 02 21 C7 56 A0 83 97   ..!.V...   1101 1100 0000 0010 0010 0001 1100 0111 0101 0110 1010 0000 1000 0011 1001 0111
+
+0  1  2  3  4  5  6  7
+00240 47 B1 92 CC A0            G....      0100 0111 1011 0001 1001 0010 1100 1100 1010 0000
+
+Open Design Specification for .dwg files
+
+86
