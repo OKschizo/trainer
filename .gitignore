@@ -23,6 +23,8 @@ knowledge/vectordb/
 
 # Raw PDF (large binary, user provides)
 knowledge/raw/*.pdf
+knowledge/autocad_chapters/
+knowledge/autocad_vectordb/
 
 # OS
 .DS_Store
