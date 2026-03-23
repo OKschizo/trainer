@@ -1,10 +1,15 @@
-# DWG Specification MCP Server
+# DWG + AutoCAD MCP Servers
 
-An MCP (Model Context Protocol) server that provides deep expertise on the **DWG binary file format** via RAG (Retrieval Augmented Generation) over the [OpenDesign Specification for .dwg files v5.4.1](https://www.opendesign.com/).
+This repository now contains two separate MCP (Model Context Protocol) servers:
+
+- `dwg_mcp`: deep expertise on the **DWG binary file format** via RAG over the OpenDesign DWG specification.
+- `autocad_mcp`: product-design guidance for building a browser-operable, open-source **AutoCAD-like application** using the AutoCAD Architecture user guide as source material.
 
 ## What it does
 
-This project turns the 279-page OpenDesign DWG specification into a searchable knowledge base that AI models can query through MCP tools. It covers:
+### DWG MCP
+
+The DWG pipeline turns the 279-page OpenDesign DWG specification into a searchable knowledge base that AI models can query through MCP tools. It covers:
 
 - **Bit codes & data types** — B, BB, BS, BL, BD, MC, MS, H, CMC, etc.
 - **File format versions** — R13 through R2018
@@ -12,6 +17,15 @@ This project turns the 279-page OpenDesign DWG specification into a searchable k
 - **All entity/object definitions** — LINE, CIRCLE, ARC, TEXT, MTEXT, POLYLINE, HATCH, INSERT, DIMENSION, etc.
 - **Compression** — LZ77 variant (R2004+), Reed-Solomon encoding (R2007+)
 - **Encryption & CRC** — 8-bit/32-bit CRC, 64-bit CRC, data encryption schemes
+
+### AutoCAD MCP
+
+The AutoCAD pipeline turns the AutoCAD Architecture user guide into a searchable planning knowledge base that AI agents can use to scope and implement browser CAD functionality. It supports:
+
+- **Manual search** — retrieve relevant passages for UI, workflows, and object behavior
+- **Feature planning** — build implementation briefs for features like walls, windows, roofs, layers, and drawing management
+- **Workflow mapping** — extract command flows, creation/edit steps, and follow-up operations
+- **Chapter retrieval** — inspect full extracted chapters from the user guide
 
 ## Architecture
 
@@ -38,7 +52,9 @@ This project turns the 279-page OpenDesign DWG specification into a searchable k
 ### Prerequisites
 
 - Python 3.11+
-- The OpenDesign Specification PDF (place in `knowledge/raw/`)
+- Python 3.11+
+- The OpenDesign DWG specification PDF for the DWG MCP
+- The AutoCAD user guide PDF for the AutoCAD MCP
 
 ### Setup
 
@@ -48,17 +64,30 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
 
-# Step 1: Extract PDF into structured markdown chapters
-python scripts/extract_pdf.py
+# DWG MCP
+python3 scripts/extract_pdf.py
+python3 scripts/build_index.py
+PYTHONPATH=src python3 -m dwg_mcp.server
 
-# Step 2: Build the vector search index
-python scripts/build_index.py
-
-# Step 3: Run the MCP server
-python -m dwg_mcp.server
+# AutoCAD MCP
+python3 scripts/extract_autocad_pdf.py --pdf autocad_aca_user_guide_englishCOMP2.pdf
+python3 scripts/build_autocad_index.py
+PYTHONPATH=src python3 -m autocad_mcp.server
 ```
 
-### MCP Tools
+### AutoCAD MCP tools
+
+The AutoCAD server exposes these tools:
+
+| Tool | Description |
+|------|-------------|
+| `search_autocad_manual` | Semantic search across the indexed AutoCAD guide |
+| `get_autocad_chapter` | Retrieve a full extracted chapter by slug/prefix |
+| `list_autocad_sources` | List all indexed AutoCAD chapter files |
+| `plan_autocad_feature` | Build a manual-grounded implementation brief for a feature |
+| `map_autocad_workflow` | Build a workflow checklist from the user guide |
+
+### DWG MCP tools
 
 The server exposes these tools:
 
@@ -71,7 +100,7 @@ The server exposes these tools:
 | `lookup_dwg_version` | Get format details for a specific DWG version |
 | `list_indexed_chapters` | List all indexed chapters and chunk count |
 
-### Cursor MCP Configuration
+### Cursor MCP configuration
 
 Add to your `.cursor/mcp.json`:
 
@@ -79,8 +108,16 @@ Add to your `.cursor/mcp.json`:
 {
   "mcpServers": {
     "dwg-spec": {
-      "command": "python",
+      "command": "python3",
       "args": ["-m", "dwg_mcp.server"],
+      "cwd": "/path/to/this/repo",
+      "env": {
+        "PYTHONPATH": "src"
+      }
+    },
+    "autocad-design": {
+      "command": "python3",
+      "args": ["-m", "autocad_mcp.server"],
       "cwd": "/path/to/this/repo",
       "env": {
         "PYTHONPATH": "src"
@@ -106,17 +143,20 @@ ruff format src/ scripts/ tests/
 ## Project structure
 
 ```
-├── src/dwg_mcp/          # MCP server package
-│   ├── server.py          #   FastMCP server with DWG tools
-│   └── search.py          #   ChromaDB semantic search engine
+├── src/dwg_mcp/              # DWG file-format MCP server
+├── src/autocad_mcp/          # AutoCAD design-planning MCP server
 ├── scripts/
-│   ├── extract_pdf.py     # PDF → structured markdown chapters
-│   └── build_index.py     # Build ChromaDB vector index
+│   ├── extract_pdf.py         # DWG PDF → markdown chapters
+│   ├── build_index.py         # DWG ChromaDB index
+│   ├── extract_autocad_pdf.py # AutoCAD PDF → markdown chapters
+│   └── build_autocad_index.py # AutoCAD ChromaDB index
 ├── knowledge/
-│   ├── raw/               # Source PDF (git-ignored)
-│   ├── chapters/          # Extracted markdown chapters
-│   └── vectordb/          # ChromaDB persistent store (git-ignored)
-├── tests/                 # pytest test suite
-├── pyproject.toml         # Project config and dependencies
+│   ├── raw/                   # DWG source PDF (git-ignored)
+│   ├── chapters/              # DWG extracted markdown chapters
+│   ├── vectordb/              # DWG ChromaDB store (git-ignored)
+│   ├── autocad_chapters/      # AutoCAD extracted markdown chapters (git-ignored)
+│   └── autocad_vectordb/      # AutoCAD ChromaDB store (git-ignored)
+├── tests/                     # pytest test suite
+├── pyproject.toml             # Project config and dependencies
 └── README.md
 ```
