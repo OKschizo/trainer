@@ -78,17 +78,41 @@ def build_feature_brief(
         [
             "",
             "## Manual-grounded requirements",
-            "- Provide an obvious entry point such as a tool, command, ribbon control, or palette action.",
-            "- Support the creation workflow described in the guide, including intermediate prompts or placement states.",
-            "- Expose the editable properties, style options, and overrides mentioned in the retrieved sections.",
-            "- Preserve the feature in the document model so it survives save, reload, and copy operations.",
-            "- Support follow-up editing flows such as grips, style reassignment, or property changes when documented.",
+            (
+                "- Provide an obvious entry point such as a tool, command, "
+                "ribbon control, or palette action."
+            ),
+            (
+                "- Support the creation workflow described in the guide, "
+                "including intermediate prompts or placement states."
+            ),
+            (
+                "- Expose the editable properties, style options, and "
+                "overrides mentioned in the retrieved sections."
+            ),
+            (
+                "- Preserve the feature in the document model so it survives "
+                "save, reload, and copy operations."
+            ),
+            (
+                "- Support follow-up editing flows such as grips, style "
+                "reassignment, or property changes when documented."
+            ),
             "",
             "## Inferred browser-engineering tasks",
-            "- Map the feature to a domain entity and persistent schema in your browser CAD document model.",
-            "- Implement canvas interactions for placement, snapping, selection, hover, and drag handles.",
+            (
+                "- Map the feature to a domain entity and persistent schema "
+                "in your browser CAD document model."
+            ),
+            (
+                "- Implement canvas interactions for placement, snapping, "
+                "selection, hover, and drag handles."
+            ),
             "- Add a property inspector or contextual side panel for post-creation edits.",
-            "- Render geometry and annotations consistently across normal, selected, and editing states.",
+            (
+                "- Render geometry and annotations consistently across normal, "
+                "selected, and editing states."
+            ),
             "- Add automated tests for creation, mutation, serialization, and viewport rendering.",
             "",
             "## Suggested build order",

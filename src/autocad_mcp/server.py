@@ -76,7 +76,9 @@ def get_autocad_chapter(chapter_slug: str) -> str:
 
     normalized = chapter_slug.strip().lower().replace(" ", "_")
     matches = sorted(
-        path for path in DEFAULT_CHAPTERS_DIR.glob("*.md") if path.stem.lower().startswith(normalized)
+        path
+        for path in DEFAULT_CHAPTERS_DIR.glob("*.md")
+        if path.stem.lower().startswith(normalized)
     )
     if not matches:
         return f"No chapter found matching '{chapter_slug}'."

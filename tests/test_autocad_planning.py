@@ -6,7 +6,6 @@ from autocad_mcp.planning import (
     format_search_results,
 )
 
-
 SAMPLE_RESULTS = [
     {
         "source": "ch20_walls.md",
@@ -52,6 +51,6 @@ def test_build_feature_brief_separates_manual_and_inferred_content():
 
 def test_build_workflow_outline_returns_checklist_and_evidence():
     output = build_workflow_outline("wall creation", SAMPLE_RESULTS)
-    assert "# Workflow outline: wall creation" in output
+    assert "# Workflow map: wall creation" in output
     assert "## Implementation checklist" in output
     assert "Drawing Walls" in output

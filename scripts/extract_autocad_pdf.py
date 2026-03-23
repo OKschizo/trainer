@@ -50,7 +50,11 @@ def extract_outline(pdf_path: Path) -> list[tuple[int, str, int]]:
     doc = fitz.open(str(pdf_path))
     toc = doc.get_toc(simple=True)
     doc.close()
-    return [(level, title.strip(), page_number) for level, title, page_number in toc if title.strip()]
+    return [
+        (level, title.strip(), page_number)
+        for level, title, page_number in toc
+        if title.strip()
+    ]
 
 
 def select_chapter_entries(outline: Iterable[tuple[int, str, int]]) -> list[tuple[int, str, int]]:
